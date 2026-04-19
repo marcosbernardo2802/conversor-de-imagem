@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<!-- ================= INÍCIO DO CÓDIGO CAMALEÃO v9.1 ================= -->
+<script>
+    // CÓDIGO CAMALEÃO v9.1 (Adaptação Perfeita de Tema Estelar e Largura)
+    window.addEventListener('message', function(event) {
+        if (event.data) {
+            
+            // 1. Camuflagem de Cores (Ajusta o tema Claro/Escuro)
+            if (event.data.action === 'setTheme') {
+                const theme = event.data.theme;
+                if (theme === 'light') {
+                    document.body.classList.add('light-theme');
+                    document.body.classList.remove('dark-theme');
+                    document.documentElement.classList.remove('dark'); // Aciona o Tailwind Light
+                } else {
+                    document.body.classList.remove('light-theme');
+                    document.body.classList.add('dark-theme');
+                    document.documentElement.classList.add('dark'); // Aciona o Tailwind Dark Oficial
+                }
+            }
+
+            // 2. Modo Módulo Embutido (Ocultar TUDO o que for externo e ajustar layout)
+            if (event.data.isPortal === true) {
+                
+                // ATAQUE 1: Seletores de Estrutura
+                const seletores = [
+                    'header', 'footer', '.banner', '[class*="banner"]', 
+                    '.footer-links', '.theme-switcher', '#theme-toggle', '.back-to-top', 'nav',
+                    'a[href="/"]', 'a[href="index.html"]', 
+                    'a[href*="cronicasestelares"]'
+                ].join(', ');
+
+                document.querySelectorAll(seletores).forEach(function(el) { 
+                    el.style.display = 'none'; 
+                });
+
+                // ATAQUE 2: Caçador de Elementos Iniciais (Destrói o primeiro título da página)
+                const primeiroTitulo = document.querySelector('h1, h2, .title, .page-title, [class*="titulo"], .header-title');
+                if (primeiroTitulo) {
+                    primeiroTitulo.style.display = 'none';
+                }
+
+                // ATAQUE 3: Caçador de Texto Implacável
+                const todosElementos = document.querySelectorAll('a, button, h1, h2, h3, h4, span, div, p, strong, b');
+                todosElementos.forEach(function(el) {
+                    // Ignora elementos com muitos filhos para não ocultar áreas úteis sem querer
+                    if (el.children.length > 1) return;
+                    
+                    const texto = el.textContent.toLowerCase().trim();
+                    const link = el.href ? el.href.toLowerCase() : '';
+                    
+                    // 3.1 Caça Botão Home
+                    if (texto === 'home' || texto === 'início' || texto === 'inicio' || texto === 'voltar ao portal' || link.includes('cronicasestelares.vercel.app')) {
+                        el.style.display = 'none';
+                    }
+
+                    // 3.2 Caça Títulos Rebeldes
+                    const nomesProibidos = [
+                        'divisor de texto', 
+                        'conversor de roteiro para .srt', 
+                        'conversor para .srt',
+                        'conversor srt',
+                        'remover silêncio do áudio', 
+                        'remover silêncio',
+                        'variador de gmail',
+                        'apoio ao projeto',
+                        'seja um protagonista'
+                    ];
+
+                    if (nomesProibidos.includes(texto)) {
+                        el.style.display = 'none';
+                    }
+                });
+
+                // ATAQUE 4: Camuflagem Estelar (Injeção de CSS para Cores, Transparência e Largura)
+                const camaleaoStyle = document.createElement('style');
+                camaleaoStyle.innerHTML = `
+                    /* 1. Fundo Transparente para herdar o visual da Nave-Mãe */
+                    html, body, main {
+                        background: transparent !important;
+                        background-color: transparent !important;
+                    }
+
+                    /* 2. Sobrescreve as variáveis do Comandante para as cores exatas do Portal */
+                    :root {
+                        --color-bg: transparent !important;
+                        --color-card-bg: #050814 !important; /* Azul quase preto do Iframe */
+                        --color-text: #e3e3e3 !important; /* Texto Escuro */
+                        --color-card-border: #333537 !important;
+                        --color-primary: #00f2fe !important;
+                    }
+
+                    body.light-theme {
+                        --color-card-bg: #f0f4f9 !important; /* Surface Clara */
+                        --color-text: #1f1f1f !important; /* Texto Claro */
+                        --color-card-border: #d1d9e0 !important;
+                    }
+
+                    /* 3. Força elementos Tailwind hardcoded a respeitarem a camuflagem */
+                    .bg-white, .bg-gray-900, .bg-gray-800, .bg-[#0a0f18], .bg-[#101a2d] { 
+                        background-color: var(--color-card-bg) !important; 
+                        border-color: var(--color-card-border) !important;
+                    }
+                    .text-gray-900, .text-gray-800, .text-white, .text-gray-200 { 
+                        color: var(--color-text) !important; 
+                    }
+
+                    /* 4. Força o aplicativo a usar 100% do espaço quando estiver no Portal */
+                    main, .container, [class*="max-w-"], [class*="w-[90%]"], [class*="w-11/12"] {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                    }
+
+                    /* 5. Destrava a Rolagem Interna do Iframe (Força Bruta) */
+                    html, body {
+                        overflow-y: auto !important;
+                        overflow-x: hidden !important;
+                        height: auto !important;
+                    }
+                `;
+                document.head.appendChild(camaleaoStyle);
+
+                // Limpeza da área de trabalho
+                const areaPrincipal = document.querySelector('main');
+                if (areaPrincipal) {
+                    areaPrincipal.style.paddingTop = '0.5rem';
+                    areaPrincipal.style.marginTop = '0';
+                }
+
+                // LIBERA A ROLAGEM: Destravando a barra via JS também
+                document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
+                document.body.style.setProperty('overflow-y', 'auto', 'important');
+
+                // 3. Ajuste de Altura Anti-Loop (Comunicação com o Portal)
+                let ultimaAltura = 0;
+                function informarAltura() {
+                    // Usa o maior valor possível para garantir que nada fica cortado
+                    const alturaAtual = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                    if (alturaAtual !== ultimaAltura && alturaAtual > 0) {
+                        ultimaAltura = alturaAtual;
+                        window.parent.postMessage({ action: 'resizeIframe', height: alturaAtual }, '*');
+                    }
+                }
+
+                informarAltura();
+                // Observa mudanças na ferramenta para reajustar o tamanho caso necessário
+                const observer = new MutationObserver(informarAltura);
+                observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+            }
+        }
+    });
+</script>
+<!-- ================= FIM DO CÓDIGO CAMALEÃO v9.1 ================= -->
+    
+    <meta charset="UTF-8">
+    <title>Conversor de Imagens - Crônicas Estelares</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ferramenta de conversão e otimização de imagens da frota Crônicas Estelares.">
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FAVICON -->
+    <link rel="icon" href="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/favicon.png">
+
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ÍCONES -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- JSZIP (Para download de Lotes) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        :root {
+            --color-bg: #0a0f18;
+            --color-text: #e0e0e0;
+            --color-primary: #00f2fe;
+            --color-secondary: #e63946;
+            --color-card-bg: rgba(16, 26, 45, 0.7);
+            --color-card-border: #223354;
+            --color-shadow: rgba(0, 242, 254, 0.2);
+            --color-highlight: #ffd700;
+            --font-main: 'Exo 2', sans-serif;
+        }
+
+        body.light-theme {
+            --color-bg: #f4f7f9;
+            --color-text: #333333;
+            --color-primary: #005fbd;
+            --color-secondary: #d90429;
+            --color-card-bg: rgba(255, 255, 255, 0.85);
+            --color-card-border: #d1d9e0;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+            --color-highlight: #b8860b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        
+        /* BOTÕES FLUTUANTES */
+        .floating-button {
+            position: fixed; z-index: 1000; cursor: pointer;
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-border);
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s ease;
+        }
+        .floating-button:hover { transform: scale(1.1); box-shadow: 0 0 10px var(--color-shadow); }
+        .floating-button svg { width: 20px; height: 20px; fill: var(--color-primary); }
+        .theme-switcher { top: 20px; right: 20px; }
+        .back-to-portal { top: 20px; left: 20px; }
+        .light-theme #theme-icon-dark, body:not(.light-theme) #theme-icon-light { display: none; }
+
+        /* BANNER */
+        .tool-banner { margin-bottom: 2rem; }
+        .tool-banner a { display: block; line-height: 0; }
+        .tool-banner-image {
+            width: 100%; height: auto; max-height: 150px;
+            object-fit: cover; border-radius: 12px;
+            border: 1px solid var(--color-card-border);
+            transition: transform 0.3s ease;
+        }
+        .tool-banner-image:hover { transform: scale(1.02); opacity: 0.9; }
+
+        /* CARTÕES DE CONTEÚDO */
+        .content-card {
+            background-color: var(--color-card-bg);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px; padding: 2.5rem; margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .light-theme .content-card { box-shadow: 0 8px 25px var(--color-shadow); }
+
+        h1, h2, h3 { color: var(--color-primary); margin-bottom: 1rem; }
+        h1 { color: var(--color-secondary); text-align: center; font-size: 1.8rem; text-shadow: 0 0 10px rgba(230, 57, 70, 0.3); }
+        
+        /* ESTILOS DO FORMULÁRIO */
+        .data-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem; border-radius: 8px;
+            border: 1px dashed var(--color-card-border);
+            transition: all 0.3s ease;
+        }
+        .light-theme .data-box { background: rgba(0,0,0,0.05); }
+
+        .form-label {
+            display: flex; justify-content: space-between;
+            color: var(--color-text); font-weight: 600; font-size: 0.775rem;
+            margin-bottom: 0.25rem;
+            align-items: center;
+        }
+        .required-star { color: var(--color-secondary); margin-right: 4px; font-weight: bold; }
+
+        .form-input {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--color-card-border);
+            border-radius: 6px;
+            padding: 0.60rem 1rem;
+            color: var(--color-text);
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .light-theme .form-input {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .form-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 8px var(--color-shadow);
+            outline: none;
+        }
+        .form-input::placeholder { color: #888; }
+
+        /* BOTÃO PRINCIPAL */
+        .btn-submit {
+            width: auto;
+            min-width: 160px;
+            margin: 0 auto;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white; border: none; 
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700; cursor: pointer;
+            transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .light-theme .btn-submit { background: linear-gradient(45deg, #2563eb, #1e3a8a); }
+        .btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5); }
+        .light-theme .btn-submit:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .btn-download {
+            /* Herda tudo do btn-submit, mantido apenas para referência sem quebrar classes */
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%; width: 20px; height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* UPLOAD ZONE CUSTOMIZADA */
+        .upload-zone {
+            width: 100%;
+            min-height: 150px;
+            border: 2px dashed var(--color-card-border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2rem;
+        }
+        .light-theme .upload-zone { background: rgba(255, 255, 255, 0.4); }
+        .upload-zone:hover, .upload-zone.dragover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .upload-zone i { font-size: 3rem; margin-bottom: 12px; color: #3b82f6; transition: transform 0.3s ease; }
+        .upload-zone:hover i, .upload-zone.dragover i { transform: translateY(-5px); }
+
+        /* THUMBNAILS PRE-CONVERSÃO */
+        .upload-thumbnails {
+            display: flex; gap: 8px; overflow-x: auto;
+            padding-bottom: 8px; margin-top: 12px; width: 100%;
+        }
+        .upload-thumbnails::-webkit-scrollbar { height: 6px; }
+        .upload-thumbnails::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 4px; }
+        .light-theme .upload-thumbnails::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); }
+        .upload-thumbnails::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        
+        .upload-thumb-wrapper {
+            position: relative; flex-shrink: 0; width: 50px; height: 50px; border-radius: 6px; overflow: hidden; cursor: pointer;
+            border: 1px solid var(--color-card-border); background: rgba(0,0,0,0.5);
+        }
+        .upload-thumb-item {
+            width: 100%; height: 100%; object-fit: cover; transition: filter 0.1s, opacity 0.2s;
+        }
+        .upload-thumb-wrapper:hover .upload-thumb-item { opacity: 0.5; }
+        .upload-thumb-wrapper .hover-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: white; font-size: 1rem; opacity: 0; transition: opacity 0.2s; pointer-events: none; text-shadow: 0 0 5px rgba(0,0,0,0.8);
+        }
+        .upload-thumb-wrapper:hover .hover-icon { opacity: 1; }
+
+        /* TABS (ESTAÇÃO DE RETOQUE) */
+        .tab-btn { padding: 0.6rem 0.2rem; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 0.8rem; font-weight: bold; opacity: 0.5; color: var(--color-text); border-bottom: 2px solid transparent; }
+        .tab-btn:hover { opacity: 0.8; }
+        .tab-btn.active { opacity: 1; border-bottom: 2px solid var(--color-primary); color: var(--color-primary); }
+        .tab-content { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* PREVIEW DE IMAGEM */
+        .image-preview-container {
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--color-card-border);
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+        }
+
+        /* SLIDER CUSTOMIZADO */
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%;
+            background: var(--color-primary); cursor: pointer; margin-top: -7px;
+            box-shadow: 0 0 8px var(--color-primary);
+            border: 2px solid var(--color-card-bg);
+        }
+        .light-theme input[type=range]::-webkit-slider-thumb {
+            background: var(--color-primary); 
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.4);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; cursor: pointer;
+            background: var(--color-card-border); border-radius: 2px;
+        }
+        .light-theme input[type=range]::-webkit-slider-runnable-track { background: rgba(0, 95, 189, 0.4); }
+
+        /* GALERIA DE RECENTES */
+        .recent-card {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--color-card-border);
+            border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
+            transition: transform 0.2s;
+        }
+        .light-theme .recent-card { background: rgba(255,255,255,0.5); }
+        .recent-card:hover { transform: translateY(-3px); border-color: var(--color-primary); }
+        .recent-img-container { height: 100px; width: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; }
+        .recent-img-container img { max-width: 100%; max-height: 100%; object-fit: cover; width: 100%; height: 100%; transition: opacity 0.2s; }
+        .recent-img-container:hover img { opacity: 0.6; }
+        .recent-img-container .hover-icon { position: absolute; font-size: 1.5rem; color: var(--color-primary); opacity: 0; transition: opacity 0.2s; pointer-events: none; text-shadow: 0 0 5px rgba(0,0,0,0.8); }
+        .recent-img-container:hover .hover-icon { opacity: 1; }
+
+        /* BOTÃO EXCLUIR ITEM DA GALERIA */
+        .btn-excluir-item {
+            background: rgba(230,57,70,0.1);
+            color: var(--color-secondary);
+            transition: all 0.2s;
+        }
+        .btn-excluir-item:hover {
+            background: var(--color-secondary);
+            color: white;
+        }
+
+        /* RODAPÉ */
+        footer { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-card-border); color: #888; text-align: center; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+        .footer-link { color: var(--color-text); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s; }
+        .footer-link:hover { color: var(--color-primary); }
+        .footer-link svg { width: 20px; height: 20px; fill: var(--color-primary); }
+        .copyright-text { font-size: 0.9em; }
+
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .content-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <!-- BOTÕES DE NAVEGAÇÃO -->
+    <a href="https://cronicasestelares.vercel.app/" class="floating-button back-to-portal" title="Voltar ao portal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </a>
+    
+    <div id="theme-toggle" class="floating-button theme-switcher" title="Alternar tema">
+        <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13.14C20.97,13.14 20.3,13.42 19.82,13.9C19.34,14.38 19.06,15.05 19.06,15.72C19.06,16.39 19.34,17.06 19.82,17.54C20.3,18.02 20.97,18.3 21.64,18.3C22.31,18.3 22.98,18.02 23.46,17.54C23.94,17.06 24.22,16.39 24.22,15.72C24.22,15.05 23.94,14.38 23.46,13.9C22.98,13.42 22.31,13.14 21.64,13.14Z M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22C15.93,22 19.33,19.79 20.94,16.63C17.9,17.56 14.62,16.4 12.5,13.82C10.38,11.24 10.45,7.87 12.68,5.3C11.39,4.28 9.81,3.75 8.12,4.05C5.91,4.5 4.05,6.17 3.34,8.36C2.63,10.55 3.19,12.94 4.83,14.57C6.47,16.21 8.85,16.78 11.05,16.07C11.33,16 11.62,15.95 11.9,15.9C11.53,15.33 11.25,14.68 11.09,14C10.23,10.82 11.7,7.5 14.5,5.8C15.45,5.23 16.5,4.96 17.55,5C17.84,2.92 15.15,2 12,2Z"/></svg>
+        <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5V2.5H11V4.5H12M18.6,6.5L19.8,5.3L18.4,3.9L17.2,5.1L18.6,6.5M20.5,11H22.5V12H20.5V11M17.2,18.9L18.4,20.1L19.8,18.7L18.6,17.5L17.2,18.9M12,20.5V22.5H13V20.5H12M5.4,17.5L4.2,18.7L2.8,17.3L4,16.1L5.4,17.5M3.5,12H1.5V11H3.5V12M6.8,5.1L5.6,3.9L4.2,5.3L5.4,6.5L6.8,5.1Z"/></svg>
+    </div>
+
+    <main class="container">
+        <!-- BANNER -->
+        <div class="tool-banner">
+            <a href="https://www.youtube.com/@CronicasEstelaress" target="_blank" rel="noopener noreferrer">
+                <img class="tool-banner-image" src="https://raw.githubusercontent.com/marcosbernardo2802/portal/main/images/baner-app.png" alt="Banner Crônicas Estelares">
+            </a>
+        </div>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div class="content-card">
+            <h1><i class="fas fa-file-image"></i> Conversor de Imagens</h1>
+            <p style="text-align: center; margin-bottom: 2rem;">Converta para WEBP, JPEG ou PNG e otimize seus arquivos. Processamento 100% local e seguro.</p>
+
+            <!-- ÁREA DA FERRAMENTA -->
+            <div class="data-box" id="app-container">
+                <form id="main-form" class="space-y-6">
+                    
+                    <!-- ZONA DE UPLOAD -->
+                    <div>
+                        <div id="drop-zone" class="upload-zone" title="Arraste uma ou mais imagens, ou clique para procurar">
+                            <input type="file" id="arquivo-upload" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif" multiple class="hidden">
+                            <i class="fas fa-images"></i>
+                            <span style="font-size: 1.1rem; font-weight: 600; color: var(--color-text); margin-bottom: 4px;">Anexar Imagem ou Lote</span>
+                            <span style="font-size: 0.8rem; opacity: 0.6;">Selecione várias de uma vez! (JPG, PNG, WEBP, GIF)</span>
+                        </div>
+                        
+                        <!-- FEEDBACK DE ARQUIVO SELECIONADO -->
+                        <div id="file-feedback" class="hidden mt-3 flex flex-col p-3 rounded-lg border border-blue-500 bg-blue-500/10">
+                            <div class="flex items-center justify-between w-full">
+                                <div class="flex items-center gap-3 overflow-hidden">
+                                    <i class="fas fa-image text-2xl text-blue-500"></i>
+                                    <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">
+                                        <p id="file-name-display" class="font-semibold text-sm m-0 text-[var(--color-text)]"></p>
+                                        <p id="file-size-display" class="text-xs opacity-70 m-0"></p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 shrink-0">
+                                    <button type="button" id="btn-add-more" class="w-8 h-8 rounded-full flex justify-center items-center text-blue-500 bg-blue-500/10 hover:bg-blue-500 hover:text-white transition-colors" title="Adicionar mais imagens ao lote">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button type="button" id="btn-remove-file" class="w-8 h-8 shrink-0 rounded-full flex justify-center items-center text-[var(--color-secondary)] bg-[rgba(230,57,70,0.1)] hover:bg-[var(--color-secondary)] hover:text-white transition-colors" title="Descartar lote">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="upload-thumbnails-container" class="upload-thumbnails hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- OPÇÕES DE CONVERSÃO -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">
+                                <span><i class="fas fa-exchange-alt mr-1"></i> Formato de Saída</span>
+                            </label>
+                            <select id="select-format" class="form-input cursor-pointer appearance-none">
+                                <option value="image/webp">WEBP (Recomendado - Mais leve)</option>
+                                <option value="image/jpeg">JPEG (Universal)</option>
+                                <option value="image/png">PNG (Alta qualidade - Mais pesada)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="form-label">
+                                <span><i class="fas fa-sliders-h mr-1"></i> Qualidade: <span id="quality-val" class="font-bold text-[var(--color-primary)]">80%</span></span>
+                                <span style="font-size: 0.65rem; opacity: 0.6;">(Aplica em WEBP/JPEG)</span>
+                            </label>
+                            <div class="flex items-center h-[38px] px-2 bg-[rgba(0,0,0,0.1)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="input-quality" min="1" max="100" step="1" value="80">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FILTROS ÓPTICOS (MINI EDITOR) -->
+                    <div class="mt-2 bg-[rgba(0,0,0,0.1)] p-3 rounded-lg border border-[var(--color-card-border)]">
+                        <div class="flex justify-between items-center mb-3 border-b border-[var(--color-card-border)] pb-2">
+                            <span class="text-sm font-bold text-[var(--color-primary)]"><i class="fas fa-magic mr-1"></i> Ajustes Ópticos</span>
+                            <button type="button" id="btn-reset-filters" class="text-[0.7rem] bg-[rgba(230,57,70,0.1)] text-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white px-2 py-1 rounded transition-colors" title="Restaurar padrões">
+                                <i class="fas fa-undo"></i> Resetar
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Brilho -->
+                            <div>
+                                <label class="form-label text-[0.7rem]">
+                                    <span>Brilho</span>
+                                    <span id="val-brightness">100%</span>
+                                </label>
+                                <div class="flex items-center h-[28px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                    <input type="range" id="input-brightness" min="0" max="200" step="1" value="100">
+                                </div>
+                            </div>
+                            <!-- Contraste -->
+                            <div>
+                                <label class="form-label text-[0.7rem]">
+                                    <span>Contraste</span>
+                                    <span id="val-contrast">100%</span>
+                                </label>
+                                <div class="flex items-center h-[28px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                    <input type="range" id="input-contrast" min="0" max="200" step="1" value="100">
+                                </div>
+                            </div>
+                            <!-- Saturação -->
+                            <div>
+                                <label class="form-label text-[0.7rem]">
+                                    <span>Saturação</span>
+                                    <span id="val-saturation">100%</span>
+                                </label>
+                                <div class="flex items-center h-[28px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                    <input type="range" id="input-saturation" min="0" max="200" step="1" value="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex items-center gap-2">
+                            <input type="checkbox" id="input-grayscale" class="cursor-pointer w-4 h-4 accent-blue-500">
+                            <label for="input-grayscale" class="text-[0.8rem] cursor-pointer opacity-80 hover:opacity-100 text-[var(--color-text)]">Aplicar filtro Preto e Branco (Escala de Cinza)</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn-submit w-full md:w-auto" disabled style="opacity: 0.5;">
+                        <i class="fas fa-sync-alt"></i> <span id="btn-text">Iniciar Conversão</span>
+                        <div id="btn-spinner" class="spinner hidden"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- RESULTADO DA FERRAMENTA -->
+            <div id="resultado-container" class="hidden mt-6">
+                <h3 style="font-size: 1.1rem; border-bottom: 1px solid var(--color-card-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                    <i class="fas fa-check-circle"></i> Conversão Concluída!
+                </h3>
+                
+                <div class="data-box flex flex-col items-center">
+                    <!-- PREVIEW DA IMAGEM -->
+                    <div id="preview-container" class="image-preview-container w-full">
+                        <img id="preview-img" class="image-preview" src="" alt="Preview da imagem convertida">
+                    </div>
+
+                    <!-- ESTATÍSTICAS -->
+                    <div class="w-full flex flex-col md:flex-row justify-between bg-[rgba(0,0,0,0.2)] p-3 rounded-lg border border-[var(--color-card-border)] mb-4 gap-2 text-sm">
+                        <div>
+                            <span class="opacity-70 text-xs uppercase block">Tamanho Original</span>
+                            <span id="stat-original" class="font-bold text-[var(--color-text)]">0 KB</span>
+                        </div>
+                        <div>
+                            <span class="opacity-70 text-xs uppercase block">Novo Tamanho</span>
+                            <span id="stat-novo" class="font-bold text-[var(--color-primary)]">0 KB</span>
+                        </div>
+                        <div>
+                            <span class="opacity-70 text-xs uppercase block">Economia</span>
+                            <span id="stat-economia" class="font-bold text-[var(--color-secondary)]">0%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- BOTÕES FINAIS -->
+                    <div class="flex flex-col md:flex-row gap-4 w-full justify-center">
+                        <button id="btn-download" class="btn-submit btn-download w-full md:w-auto">
+                            <i class="fas fa-download"></i> Baixar Imagem Otimizada
+                        </button>
+                        <button onclick="resetApp()" class="btn-submit w-full md:w-auto" style="background: transparent; border: 1px solid #3b82f6; color: #3b82f6;">
+                            <i class="fas fa-redo"></i> Nova Conversão
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CANVAS OCULTO PARA PROCESSAMENTO -->
+            <canvas id="processing-canvas" class="hidden"></canvas>
+
+            <!-- GALERIA DE RECENTES -->
+            <div id="galeria-container" class="hidden mt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-[var(--color-card-border)] pb-2 mb-4 gap-2">
+                    <h3 style="font-size: 1.1rem; margin: 0; border: none; padding: 0;">
+                        <i class="fas fa-history"></i> Conversões Recentes
+                    </h3>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button id="btn-limpar-galeria" class="btn-submit hidden" style="background: rgba(230,57,70,0.1); color: var(--color-secondary); border: 1px solid var(--color-secondary); min-width: auto; margin: 0; padding: 0.4rem 1rem; font-size: 0.8rem;" title="Apagar toda a galeria">
+                            <i class="fas fa-trash-alt"></i> Limpar
+                        </button>
+                        <button id="btn-download-lote" class="btn-submit btn-download hidden" style="min-width: auto; margin: 0; padding: 0.4rem 1rem; font-size: 0.8rem;" title="Baixar todas as imagens em ZIP">
+                            <i class="fas fa-file-archive"></i> Baixar Lote (ZIP)
+                        </button>
+                    </div>
+                </div>
+                <div id="galeria-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Itens serão injetados via JS -->
+                </div>
+                <div id="galeria-footer" class="mt-4 flex justify-end items-center gap-2 text-sm opacity-80 hidden">
+                    <i class="fas fa-database text-[var(--color-primary)]"></i> Armazenamento da Galeria: <span id="galeria-total-size" class="font-bold text-[var(--color-primary)]">0 KB</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <div style="background: rgba(0,0,0,0.2); border: 1px dashed var(--color-card-border); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: inline-block;">
+                <p style="font-size: 0.85rem; margin-bottom: 0.5rem;"><i class="fas fa-heart" style="color: var(--color-secondary);"></i> Apoie a Frota Solares (Meta do PC Novo) via Pix:</p>
+                <code style="color: var(--color-primary); font-weight: 700; user-select: all;">cronicasestelares.oficial@gmail.com</code>
+            </div>
+
+            <div class="footer-links">
+                <a href="https://www.youtube.com/channel/UCSI73DwupK9w8SLPESX1DNw/join" target="_blank" class="footer-link" title="Seja Membro Oficial">
+                    <i class="fas fa-medal" style="font-size: 1.2rem; color: var(--color-highlight);"></i>
+                    <span>Alistamento</span>
+                </a>
+                <a href="https://www.youtube.com/@CronicasEstelaress" target="_blank" class="footer-link">
+                    <i class="fab fa-youtube" style="font-size: 1.2rem; color: red;"></i>
+                    <span>Canal no YouTube</span>
+                </a>
+                <a href="https://cronicasestelares.vercel.app/" target="_blank" class="footer-link">
+                    <i class="fas fa-rocket" style="color: var(--color-primary);"></i>
+                    <span>Ferramentas da Frota</span>
+                </a>
+            </div>
+            <p class="copyright-text">&copy; <span id="current-year">2026</span> Crônicas Estelares. Sistemas desenvolvidos pelo Comandante Marcos.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE PREVIEW EM TEMPO REAL -->
+    <div id="live-preview-modal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm transition-opacity">
+        <button type="button" id="btn-close-preview" class="absolute top-4 right-4 text-white opacity-70 hover:opacity-100 transition-opacity z-50 p-2">
+            <i class="fas fa-times text-3xl"></i>
+        </button>
+        
+        <div class="w-full h-full max-w-6xl flex flex-col md:flex-row gap-4 items-center">
+            <!-- Área da Imagem Grande -->
+            <div class="flex-grow w-full md:w-2/3 h-[50vh] md:h-[80vh] flex justify-center items-center p-4 border border-white/10 rounded-xl bg-black/50 overflow-hidden">
+                <div class="relative inline-flex items-center justify-center max-w-full max-h-full" style="line-height: 0;">
+                    <!-- A imagem abraça o container para que os overlays fiquem perfeitamente alinhados -->
+                    <img id="live-preview-img" class="max-w-full max-h-full transition-all duration-100" style="object-fit: contain; box-sizing: border-box;" src="" alt="Preview">
+                    <div id="live-preview-vignette" class="absolute inset-0 pointer-events-none transition-all duration-100" style="box-shadow: inset 0 0 0px rgba(0,0,0,0);"></div>
+                    
+                    <!-- Elementos agora são arrastáveis (cursor-grab) com borda indicativa no hover e sem atraso de movimento -->
+                    <img id="live-preview-logo-overlay" class="absolute cursor-grab transform -translate-x-1/2 -translate-y-1/2 z-10 hover:outline hover:outline-2 hover:outline-[var(--color-primary)] hover:outline-offset-2 transition-opacity" style="display: none;" src="">
+                    <div id="live-preview-text-overlay" class="absolute cursor-grab font-bold whitespace-nowrap transform -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] z-20 hover:outline hover:outline-2 hover:outline-[var(--color-primary)] hover:outline-offset-4 rounded transition-opacity" style="display: none; font-family: Arial, sans-serif;"></div>
+                </div>
+            </div>
+
+            <!-- Painel de Controles no Modal -->
+            <div class="w-full md:w-1/3 bg-[var(--color-card-bg)] border border-[var(--color-card-border)] p-4 md:p-6 rounded-xl shadow-2xl shrink-0 flex flex-col h-full md:h-auto max-h-[90vh]">
+                <h3 class="text-xl font-bold text-[var(--color-primary)] mb-2 border-b border-[var(--color-card-border)] pb-2 shrink-0">
+                    <i class="fas fa-eye"></i> Estação de Retoque
+                </h3>
+                
+                <!-- TABS NAV -->
+                <div class="flex border-b border-[var(--color-card-border)] mb-4 shrink-0">
+                    <button type="button" class="tab-btn active flex-1" data-tab="tab-cores" title="Ajustes de Luz e Cor"><i class="fas fa-palette"></i> Cor</button>
+                    <button type="button" class="tab-btn flex-1" data-tab="tab-forma" title="Formato, Geometria e Borda"><i class="fas fa-crop-alt"></i> Forma</button>
+                    <button type="button" class="tab-btn flex-1" data-tab="tab-efeitos" title="Efeitos Especiais"><i class="fas fa-magic"></i> Efeitos</button>
+                    <button type="button" class="tab-btn flex-1" data-tab="tab-texto" title="Marcas de Água e Logótipos"><i class="fas fa-stamp"></i> Marca</button>
+                </div>
+                
+                <div class="space-y-4 overflow-y-auto flex-grow pr-2" style="scrollbar-width: thin;">
+                    
+                    <!-- TAB 1: CORES -->
+                    <div id="tab-cores" class="tab-content space-y-4">
+                        <!-- Brilho -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Brilho</span><span id="modal-val-brightness">100%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-brightness" min="0" max="200" step="1" value="100">
+                            </div>
+                        </div>
+                        <!-- Contraste -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Contraste</span><span id="modal-val-contrast">100%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-contrast" min="0" max="200" step="1" value="100">
+                            </div>
+                        </div>
+                        <!-- Saturação -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Saturação</span><span id="modal-val-saturation">100%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-saturation" min="0" max="200" step="1" value="100">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex items-center gap-2 border-t border-[var(--color-card-border)] pt-4">
+                            <input type="checkbox" id="modal-input-grayscale" class="cursor-pointer w-4 h-4 accent-blue-500">
+                            <label for="modal-input-grayscale" class="text-[0.85rem] cursor-pointer opacity-80 hover:opacity-100 text-[var(--color-text)]">Filtro Preto e Branco</label>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: FORMA -->
+                    <div id="tab-forma" class="tab-content hidden space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" id="btn-rotate-left" class="bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] text-[var(--color-text)] p-3 rounded text-sm transition-all shadow-sm"><i class="fas fa-undo text-lg block mb-1"></i> Girar Esq.</button>
+                            <button type="button" id="btn-rotate-right" class="bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] text-[var(--color-text)] p-3 rounded text-sm transition-all shadow-sm"><i class="fas fa-redo text-lg block mb-1"></i> Girar Dir.</button>
+                            <button type="button" id="btn-flip-h" class="bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] text-[var(--color-text)] p-3 rounded text-sm transition-all shadow-sm"><i class="fas fa-arrows-alt-h text-lg block mb-1"></i> Espelhar H.</button>
+                            <button type="button" id="btn-flip-v" class="bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] text-[var(--color-text)] p-3 rounded text-sm transition-all shadow-sm"><i class="fas fa-arrows-alt-v text-lg block mb-1"></i> Espelhar V.</button>
+                        </div>
+
+                        <div class="border-t border-[var(--color-card-border)] pt-4 mt-4">
+                            <span class="text-sm font-bold text-[var(--color-primary)] block mb-3"><i class="fas fa-crop"></i> Recorte (Crop)</span>
+                            <div class="grid grid-cols-2 gap-3 items-center">
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Topo</span><span id="modal-val-croptop">0%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-croptop" min="0" max="49" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Base</span><span id="modal-val-cropbottom">0%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-cropbottom" min="0" max="49" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Esquerda</span><span id="modal-val-cropleft">0%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-cropleft" min="0" max="49" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Direita</span><span id="modal-val-cropright">0%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-cropright" min="0" max="49" step="1" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-[var(--color-card-border)] pt-4 mt-4">
+                            <span class="text-sm font-bold text-[var(--color-primary)] block mb-3"><i class="far fa-square"></i> Moldura (Borda)</span>
+                            <div class="grid grid-cols-3 gap-3 items-center">
+                                <div class="col-span-2">
+                                    <label class="form-label text-[0.8rem]"><span>Espessura</span><span id="modal-val-borderwidth">0px</span></label>
+                                    <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-borderwidth" min="0" max="100" step="1" value="0">
+                                    </div>
+                                </div>
+                                <div class="col-span-1">
+                                    <label class="form-label text-[0.8rem]"><span>Cor</span></label>
+                                    <input type="color" id="modal-input-bordercolor" value="#ffffff" class="w-full h-[30px] p-0 border-0 rounded cursor-pointer">
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-[0.65rem] opacity-60 text-center mt-4"><i class="fas fa-info-circle"></i> Transformações afetam apenas esta conversão individual.</p>
+                    </div>
+
+                    <!-- TAB 3: EFEITOS -->
+                    <div id="tab-efeitos" class="tab-content hidden space-y-4">
+                        <!-- Blur -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Desfoque (Blur)</span><span id="modal-val-blur">0px</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-blur" min="0" max="20" step="1" value="0">
+                            </div>
+                        </div>
+                        <!-- Sepia -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Sépia (Vintage)</span><span id="modal-val-sepia">0%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-sepia" min="0" max="100" step="1" value="0">
+                            </div>
+                        </div>
+                        <!-- Vinheta -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Vinheta (Bordas Escuras)</span><span id="modal-val-vignette">0%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-vignette" min="0" max="100" step="1" value="0">
+                            </div>
+                        </div>
+                        <!-- Hue Rotate -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Rotação de Matiz (Cores)</span><span id="modal-val-hue">0°</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-hue" min="0" max="360" step="1" value="0">
+                            </div>
+                        </div>
+                        <!-- Invert -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Inversão (Negativo)</span><span id="modal-val-invert">0%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-invert" min="0" max="100" step="1" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: TEXTO E LOGO -->
+                    <div id="tab-texto" class="tab-content hidden space-y-4">
+                        <!-- Seção de Logo -->
+                        <div class="bg-[rgba(0,0,0,0.15)] p-3 rounded-lg border border-[var(--color-card-border)] border-dashed">
+                            <label class="form-label text-[0.8rem] mb-2"><span class="text-[var(--color-primary)]"><i class="fas fa-image"></i> Logótipo (Marca de Água)</span></label>
+                            <input type="file" id="modal-input-logo" accept="image/png, image/jpeg, image/webp" class="form-input text-xs h-[32px] py-1 mb-3 cursor-pointer">
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Tamanho Relativo</span><span id="modal-val-logosize">20%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-logosize" min="1" max="100" step="1" value="20">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Opacidade</span><span id="modal-val-logoopacity">100%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-logoopacity" min="0" max="100" step="1" value="100">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Posição (X)</span><span id="modal-val-logox">50%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-logox" min="0" max="100" step="1" value="50">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label text-[0.7rem]"><span>Posição (Y)</span><span id="modal-val-logoy">50%</span></label>
+                                    <div class="flex items-center h-[24px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                        <input type="range" id="modal-input-logoy" min="0" max="100" step="1" value="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="border-[var(--color-card-border)]">
+
+                        <!-- Seção de Texto -->
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span><i class="fas fa-font"></i> Texto Livre</span></label>
+                            <input type="text" id="modal-input-text" placeholder="Ex: © Frota Solares" class="form-input text-sm h-[32px] py-1">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="form-label text-[0.8rem]"><span>Fonte</span></label>
+                                <select id="modal-input-textfont" class="form-input text-sm h-[30px] py-0 cursor-pointer appearance-none">
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="'Courier New', Courier, monospace">Courier New</option>
+                                    <option value="'Georgia', serif">Georgia</option>
+                                    <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                                    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                                    <option value="'Verdana', sans-serif">Verdana</option>
+                                    <option value="'Impact', sans-serif">Impact</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label text-[0.8rem]"><span>Cor do Texto</span></label>
+                                <input type="color" id="modal-input-textcolor" value="#ffffff" class="w-full h-[30px] p-0 border-0 rounded cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="form-label text-[0.8rem]"><span>Tamanho</span><span id="modal-val-textsize">40px</span></label>
+                                <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                    <input type="range" id="modal-input-textsize" min="10" max="300" step="1" value="40">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label text-[0.8rem]"><span>Opacidade</span><span id="modal-val-textopacity">100%</span></label>
+                                <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                    <input type="range" id="modal-input-textopacity" min="0" max="100" step="1" value="100">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Posição Horizontal (X)</span><span id="modal-val-textx">50%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-textx" min="0" max="100" step="1" value="50">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label text-[0.8rem]"><span>Posição Vertical (Y)</span><span id="modal-val-texty">90%</span></label>
+                            <div class="flex items-center h-[30px] px-2 bg-[rgba(0,0,0,0.2)] border border-[var(--color-card-border)] rounded-md">
+                                <input type="range" id="modal-input-texty" min="0" max="100" step="1" value="90">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shrink-0 mt-4 border-t border-[var(--color-card-border)] pt-4">
+                    <div class="flex gap-2">
+                        <button type="button" id="modal-btn-reset" class="flex-1 bg-[rgba(230,57,70,0.1)] text-[var(--color-secondary)] border border-[var(--color-secondary)] hover:bg-[var(--color-secondary)] hover:text-white py-2 rounded transition-colors text-sm font-bold">
+                            <i class="fas fa-undo"></i> Resetar
+                        </button>
+                        <button type="button" id="modal-btn-apply" class="flex-1 bg-blue-500/10 text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white py-2 rounded transition-colors text-sm font-bold">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </div>
+                    <button type="button" id="modal-btn-convert" class="w-full mt-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-500 hover:to-blue-700 py-3 rounded transition-all text-sm font-bold shadow-[0_0_15px_rgba(37,99,235,0.4)] flex justify-center items-center gap-2">
+                        <i class="fas fa-bolt"></i> Converter Esta Imagem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA DA APLICAÇÃO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Atualizar ano
+            const currentYearEl = document.getElementById('current-year');
+            if (currentYearEl) {
+                currentYearEl.textContent = new Date().getFullYear();
+            }
+
+            // Lógica do Tema
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const isLight = document.body.classList.toggle('light-theme');
+                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                });
+            }
+
+            // Aplicar tema salvo
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'light') {
+                document.body.classList.add('light-theme');
+            } else if (!storedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                document.body.classList.add('light-theme');
+            }
+
+            // ================= LÓGICA PRINCIPAL DA FERRAMENTA =================
+            const form = document.getElementById('main-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnSpinner = document.getElementById('btn-spinner');
+            const resultadoContainer = document.getElementById('resultado-container');
+            
+            // Elementos de Upload
+            const dropZone = document.getElementById('drop-zone');
+            const arquivoUpload = document.getElementById('arquivo-upload');
+            const fileFeedback = document.getElementById('file-feedback');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const fileSizeDisplay = document.getElementById('file-size-display');
+            const btnRemoveFile = document.getElementById('btn-remove-file');
+            const btnAddMore = document.getElementById('btn-add-more');
+            const uploadThumbnailsContainer = document.getElementById('upload-thumbnails-container');
+            
+            // Opções
+            const selectFormat = document.getElementById('select-format');
+            const inputQuality = document.getElementById('input-quality');
+            const qualityVal = document.getElementById('quality-val');
+            
+            // Filtros
+            const inputBrightness = document.getElementById('input-brightness');
+            const inputContrast = document.getElementById('input-contrast');
+            const inputSaturation = document.getElementById('input-saturation');
+            const inputGrayscale = document.getElementById('input-grayscale');
+            const valBrightness = document.getElementById('val-brightness');
+            const valContrast = document.getElementById('val-contrast');
+            const valSaturation = document.getElementById('val-saturation');
+            const btnResetFilters = document.getElementById('btn-reset-filters');
+            
+            // Elementos do Modal de Preview
+            const livePreviewModal = document.getElementById('live-preview-modal');
+            const livePreviewImg = document.getElementById('live-preview-img');
+            const btnClosePreview = document.getElementById('btn-close-preview');
+            const modalBtnApply = document.getElementById('modal-btn-apply');
+            const modalBtnReset = document.getElementById('modal-btn-reset');
+            const modalBtnConvert = document.getElementById('modal-btn-convert');
+            const modalInputBrightness = document.getElementById('modal-input-brightness');
+            const modalInputContrast = document.getElementById('modal-input-contrast');
+            const modalInputSaturation = document.getElementById('modal-input-saturation');
+            const modalInputGrayscale = document.getElementById('modal-input-grayscale');
+            const modalValBrightness = document.getElementById('modal-val-brightness');
+            const modalValContrast = document.getElementById('modal-val-contrast');
+            const modalValSaturation = document.getElementById('modal-val-saturation');
+
+            // Novos controles do Modal
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const btnRotateLeft = document.getElementById('btn-rotate-left');
+            const btnRotateRight = document.getElementById('btn-rotate-right');
+            const btnFlipH = document.getElementById('btn-flip-h');
+            const btnFlipV = document.getElementById('btn-flip-v');
+            const modalInputBlur = document.getElementById('modal-input-blur');
+            const modalInputSepia = document.getElementById('modal-input-sepia');
+            const modalInputHue = document.getElementById('modal-input-hue');
+            const modalInputInvert = document.getElementById('modal-input-invert');
+            const modalInputVignette = document.getElementById('modal-input-vignette');
+            const modalValBlur = document.getElementById('modal-val-blur');
+            const modalValSepia = document.getElementById('modal-val-sepia');
+            const modalValHue = document.getElementById('modal-val-hue');
+            const modalValInvert = document.getElementById('modal-val-invert');
+            const modalValVignette = document.getElementById('modal-val-vignette');
+
+            const modalInputBorderWidth = document.getElementById('modal-input-borderwidth');
+            const modalInputBorderColor = document.getElementById('modal-input-bordercolor');
+            const modalValBorderWidth = document.getElementById('modal-val-borderwidth');
+
+            // Novos controles de Recorte (Crop)
+            const modalInputCropTop = document.getElementById('modal-input-croptop');
+            const modalInputCropBottom = document.getElementById('modal-input-cropbottom');
+            const modalInputCropLeft = document.getElementById('modal-input-cropleft');
+            const modalInputCropRight = document.getElementById('modal-input-cropright');
+            const modalValCropTop = document.getElementById('modal-val-croptop');
+            const modalValCropBottom = document.getElementById('modal-val-cropbottom');
+            const modalValCropLeft = document.getElementById('modal-val-cropleft');
+            const modalValCropRight = document.getElementById('modal-val-cropright');
+
+            // Novos controles de Texto e Logo do Modal
+            const modalInputText = document.getElementById('modal-input-text');
+            const modalInputTextFont = document.getElementById('modal-input-textfont');
+            const modalInputTextColor = document.getElementById('modal-input-textcolor');
+            const modalInputTextSize = document.getElementById('modal-input-textsize');
+            const modalInputTextOpacity = document.getElementById('modal-input-textopacity');
+            const modalInputTextX = document.getElementById('modal-input-textx');
+            const modalInputTextY = document.getElementById('modal-input-texty');
+            const modalValTextSize = document.getElementById('modal-val-textsize');
+            const modalValTextOpacity = document.getElementById('modal-val-textopacity');
+            const modalValTextX = document.getElementById('modal-val-textx');
+            const modalValTextY = document.getElementById('modal-val-texty');
+            const livePreviewTextOverlay = document.getElementById('live-preview-text-overlay');
+
+            const modalInputLogo = document.getElementById('modal-input-logo');
+            const modalInputLogoSize = document.getElementById('modal-input-logosize');
+            const modalInputLogoOpacity = document.getElementById('modal-input-logoopacity');
+            const modalInputLogoX = document.getElementById('modal-input-logox');
+            const modalInputLogoY = document.getElementById('modal-input-logoy');
+            const modalValLogoSize = document.getElementById('modal-val-logosize');
+            const modalValLogoOpacity = document.getElementById('modal-val-logoopacity');
+            const modalValLogoX = document.getElementById('modal-val-logox');
+            const modalValLogoY = document.getElementById('modal-val-logoy');
+            const livePreviewLogoOverlay = document.getElementById('live-preview-logo-overlay');
+            const livePreviewVignette = document.getElementById('live-preview-vignette');
+
+            // --- LÓGICA DE ARRASTAR E SOLTAR (DRAG & DROP) NOS OVERLAYS ---
+            const setupDraggable = (overlay, inputX, inputY) => {
+                let isDragging = false;
+                let container = null;
+
+                const startDrag = (e) => {
+                    isDragging = true;
+                    overlay.style.cursor = 'grabbing';
+                    container = livePreviewImg.parentElement;
+                    e.preventDefault(); // Evita que o browser tente "salvar" a imagem/texto ao arrastar
+                };
+
+                const doDrag = (e) => {
+                    if (!isDragging || !container) return;
+                    
+                    const rect = container.getBoundingClientRect();
+                    
+                    // Suporte para Mouse e Telas Touch
+                    let clientX = e.clientX;
+                    let clientY = e.clientY;
+                    if (e.touches && e.touches.length > 0) {
+                        clientX = e.touches[0].clientX;
+                        clientY = e.touches[0].clientY;
+                    }
+
+                    // Posição relativa ao container da imagem
+                    let x = clientX - rect.left;
+                    let y = clientY - rect.top;
+
+                    // Limita os eixos para não arrastar para fora da área da imagem
+                    x = Math.max(0, Math.min(x, rect.width));
+                    y = Math.max(0, Math.min(y, rect.height));
+
+                    // Converte os pixels de volta para as porcentagens (0% a 100%)
+                    let pctX = (x / rect.width) * 100;
+                    let pctY = (y / rect.height) * 100;
+
+                    // Sincroniza os novos valores com as barrinhas (sliders)
+                    inputX.value = Math.round(pctX);
+                    inputY.value = Math.round(pctY);
+
+                    // Re-aplica a renderização para mover visualmente em tempo real
+                    aplicarFiltrosModal();
+                };
+
+                const stopDrag = () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        overlay.style.cursor = 'grab';
+                    }
+                };
+
+                // Inicia o arraste
+                overlay.addEventListener('mousedown', startDrag);
+                overlay.addEventListener('touchstart', startDrag, { passive: false });
+
+                // Executa o movimento pelo documento inteiro (para não soltar se mover rápido demais)
+                document.addEventListener('mousemove', doDrag);
+                document.addEventListener('touchmove', doDrag, { passive: false });
+
+                // Para o arraste
+                document.addEventListener('mouseup', stopDrag);
+                document.addEventListener('touchend', stopDrag);
+            };
+
+            // Ativa os módulos de rastreio para o Texto e a Logo
+            setupDraggable(livePreviewTextOverlay, modalInputTextX, modalInputTextY);
+            setupDraggable(livePreviewLogoOverlay, modalInputLogoX, modalInputLogoY);
+
+            // Variáveis de Transformação
+            let modalRotation = 0;
+            let modalFlipH = 1;
+            let modalFlipV = 1;
+            let currentLogoObj = null; // Guardará o objeto Image() do logo
+
+            // Resultado
+            const previewContainer = document.getElementById('preview-container');
+            const previewImg = document.getElementById('preview-img');
+            const statOriginal = document.getElementById('stat-original');
+            const statNovo = document.getElementById('stat-novo');
+            const statEconomia = document.getElementById('stat-economia');
+            const btnDownload = document.getElementById('btn-download');
+            const btnDownloadLote = document.getElementById('btn-download-lote');
+            const btnLimparGaleria = document.getElementById('btn-limpar-galeria');
+            const processingCanvas = document.getElementById('processing-canvas');
+            const galeriaContainer = document.getElementById('galeria-container');
+            const galeriaGrid = document.getElementById('galeria-grid');
+            const galeriaFooter = document.getElementById('galeria-footer');
+            const galeriaTotalSize = document.getElementById('galeria-total-size');
+
+            let currentFiles = [];
+            let conversoesRecentes = []; // Armazena a matriz de itens recentes
+            let pendingBlobUrls = []; // Armazena as miniaturas temporárias do lote
+            let globalImageCounter = 1; // Contador global de imagens para renomeio
+
+            // --- FUNÇÕES AUXILIARES ---
+            const formatBytes = (bytes, decimals = 2) => {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            };
+
+            const resetBotao = () => {
+                submitBtn.disabled = currentFiles.length === 0;
+                submitBtn.style.opacity = currentFiles.length > 0 ? '1' : '0.5';
+                btnText.textContent = "Iniciar Conversão";
+                btnSpinner.classList.add('hidden');
+            };
+
+            // --- LÓGICA DE DRAG AND DROP E SELEÇÃO ---
+            dropZone.addEventListener('click', () => arquivoUpload.click());
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+                fileFeedback.addEventListener(eventName, preventDefaults, false); // O painel azul agora também aceita arquivos!
+            });
+            function preventDefaults (e) { e.preventDefault(); e.stopPropagation(); }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'), false);
+                fileFeedback.addEventListener(eventName, () => fileFeedback.classList.add('opacity-70'), false); // Efeito visual de brilho
+            });
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'), false);
+                fileFeedback.addEventListener(eventName, () => fileFeedback.classList.remove('opacity-70'), false);
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                handleFiles(dt.files);
+            });
+
+            fileFeedback.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                handleFiles(dt.files); // Processa as imagens soltas em cima do lote atual
+            });
+
+            arquivoUpload.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+                arquivoUpload.value = ''; // Permite selecionar o mesmo arquivo/pasta de novo se precisar
+            });
+
+            function handleFiles(files) {
+                const validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+                if (validFiles.length > 0) {
+                    // Soma os novos arquivos com os que já estavam carregados
+                    currentFiles = currentFiles.concat(validFiles);
+                    
+                    atualizarPainelArquivos();
+                    
+                    dropZone.classList.add('hidden');
+                    fileFeedback.classList.remove('hidden');
+                    uploadThumbnailsContainer.classList.remove('hidden');
+                    resetBotao();
+                    resultadoContainer.classList.add('hidden'); // Esconde resultado anterior se houver
+                } else if (currentFiles.length === 0) {
+                    alert("Comandante, as diretrizes exigem que você envie arquivos de imagem válidos.");
+                }
+            }
+
+            function atualizarPainelArquivos() {
+                if (currentFiles.length === 1) {
+                    fileNameDisplay.textContent = currentFiles[0].name;
+                    fileSizeDisplay.textContent = formatBytes(currentFiles[0].size);
+                } else {
+                    fileNameDisplay.textContent = `${currentFiles.length} imagens selecionadas (Lote)`;
+                    const totalSize = currentFiles.reduce((acc, file) => acc + file.size, 0);
+                    fileSizeDisplay.textContent = `Total: ${formatBytes(totalSize)}`;
+                }
+
+                // Limpa miniaturas antigas da memória RAM
+                pendingBlobUrls.forEach(url => URL.revokeObjectURL(url));
+                pendingBlobUrls = [];
+                uploadThumbnailsContainer.innerHTML = '';
+
+                // Gera as novas miniaturas
+                currentFiles.forEach(file => {
+                    const url = URL.createObjectURL(file);
+                    pendingBlobUrls.push(url);
+                    
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'upload-thumb-wrapper';
+                    wrapper.title = "Clique para editar";
+                    wrapper.onclick = () => abrirModalPreview(file, url);
+
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'upload-thumb-item filtro-alvo'; // Classe marcadora para aplicar o filtro CSS
+                    
+                    const icon = document.createElement('i');
+                    icon.className = 'fas fa-magic hover-icon';
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(icon);
+                    
+                    uploadThumbnailsContainer.appendChild(wrapper);
+                });
+                
+                // Aplica os filtros atuais às novas miniaturas
+                aplicarFiltrosVisuais();
+            }
+
+            btnAddMore.addEventListener('click', (e) => {
+                e.stopPropagation();
+                arquivoUpload.click();
+            });
+
+            btnRemoveFile.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentFiles = [];
+                arquivoUpload.value = '';
+                
+                // Limpa as miniaturas do lote
+                pendingBlobUrls.forEach(url => URL.revokeObjectURL(url));
+                pendingBlobUrls = [];
+                uploadThumbnailsContainer.innerHTML = '';
+                uploadThumbnailsContainer.classList.add('hidden');
+
+                fileFeedback.classList.add('hidden');
+                dropZone.classList.remove('hidden');
+                resultadoContainer.classList.add('hidden');
+                resetBotao();
+            });
+
+            // --- SLIDER DE QUALIDADE ---
+            inputQuality.addEventListener('input', (e) => {
+                qualityVal.textContent = `${e.target.value}%`;
+            });
+
+            // --- LÓGICA DE ABAS (TABS) ---
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.add('hidden'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.remove('hidden');
+                });
+            });
+
+            // --- LÓGICA DE FILTROS E PREVIEW EM TEMPO REAL ---
+            
+            // Função central para gerar a string de filtro CSS (Painel Principal)
+            const obterFiltroCSS = () => {
+                const b = inputBrightness.value;
+                const c = inputContrast.value;
+                const s = inputSaturation.value;
+                const g = inputGrayscale.checked ? 100 : 0;
+                return `brightness(${b}%) contrast(${c}%) saturate(${s}%) grayscale(${g}%)`;
+            };
+
+            // Aplica o filtro visualmente apenas nas Miniaturas do Painel
+            const aplicarFiltrosVisuais = () => {
+                const filtroCSS = obterFiltroCSS();
+                document.querySelectorAll('.filtro-alvo').forEach(img => {
+                    img.style.filter = filtroCSS;
+                });
+            };
+
+            // Aplica o filtro visualmente apenas na Janela Modal (Isolado)
+            const aplicarFiltrosModal = () => {
+                const b = modalInputBrightness.value;
+                const c = modalInputContrast.value;
+                const s = modalInputSaturation.value;
+                const g = modalInputGrayscale.checked ? 100 : 0;
+                
+                const blur = modalInputBlur.value;
+                const sepia = modalInputSepia.value;
+                const hue = modalInputHue.value;
+                const invert = modalInputInvert.value;
+                const vignette = modalInputVignette.value;
+
+                const borderWidth = modalInputBorderWidth.value;
+                const borderColor = modalInputBorderColor.value;
+
+                const cTop = modalInputCropTop.value;
+                const cBottom = modalInputCropBottom.value;
+                const cLeft = modalInputCropLeft.value;
+                const cRight = modalInputCropRight.value;
+
+                const clipPathStr = `inset(${cTop}% ${cRight}% ${cBottom}% ${cLeft}%)`;
+
+                if(livePreviewImg) {
+                    livePreviewImg.style.filter = `brightness(${b}%) contrast(${c}%) saturate(${s}%) grayscale(${g}%) blur(${blur}px) sepia(${sepia}%) hue-rotate(${hue}deg) invert(${invert}%)`;
+                    livePreviewImg.style.transform = `rotate(${modalRotation}deg) scale(${modalFlipH}, ${modalFlipV})`;
+                    livePreviewImg.style.border = `${borderWidth}px solid ${borderColor}`;
+                    livePreviewImg.style.clipPath = clipPathStr;
+                }
+                
+                // Vinheta no Preview
+                if (livePreviewVignette) {
+                    // Simula a vinheta com um box-shadow interno. O tamanho do shadow se ajusta pela intensidade
+                    const spread = Math.max(10, vignette * 1.5);
+                    livePreviewVignette.style.boxShadow = `inset 0 0 ${spread}px rgba(0,0,0,${vignette / 50})`;
+                    livePreviewVignette.style.clipPath = clipPathStr;
+                }
+
+                modalValBrightness.textContent = `${b}%`;
+                modalValContrast.textContent = `${c}%`;
+                modalValSaturation.textContent = `${s}%`;
+                modalValBlur.textContent = `${blur}px`;
+                modalValSepia.textContent = `${sepia}%`;
+                modalValHue.textContent = `${hue}°`;
+                modalValInvert.textContent = `${invert}%`;
+                modalValVignette.textContent = `${vignette}%`;
+                modalValBorderWidth.textContent = `${borderWidth}px`;
+                
+                modalValCropTop.textContent = `${cTop}%`;
+                modalValCropBottom.textContent = `${cBottom}%`;
+                modalValCropLeft.textContent = `${cLeft}%`;
+                modalValCropRight.textContent = `${cRight}%`;
+
+                // Renderização do Texto no Preview
+                const txt = modalInputText.value;
+                const tFont = modalInputTextFont.value;
+                const tColor = modalInputTextColor.value;
+                const tSize = modalInputTextSize.value;
+                const tOpacity = modalInputTextOpacity.value;
+                const tX = modalInputTextX.value;
+                const tY = modalInputTextY.value;
+
+                modalValTextSize.textContent = `${tSize}px`;
+                modalValTextOpacity.textContent = `${tOpacity}%`;
+                modalValTextX.textContent = `${tX}%`;
+                modalValTextY.textContent = `${tY}%`;
+
+                if (txt.trim() !== '') {
+                    livePreviewTextOverlay.style.display = 'block';
+                    livePreviewTextOverlay.textContent = txt;
+                    livePreviewTextOverlay.style.fontFamily = tFont;
+                    livePreviewTextOverlay.style.color = tColor;
+                    livePreviewTextOverlay.style.opacity = tOpacity / 100;
+                    // Reduzimos o tamanho visualmente no preview para se adequar melhor ao ecrã
+                    livePreviewTextOverlay.style.fontSize = `${Math.max(12, tSize * 0.4)}px`; 
+                    livePreviewTextOverlay.style.left = `${tX}%`;
+                    livePreviewTextOverlay.style.top = `${tY}%`;
+                } else {
+                    livePreviewTextOverlay.style.display = 'none';
+                }
+
+                // Renderização do Logótipo no Preview
+                if (currentLogoObj) {
+                    livePreviewLogoOverlay.style.display = 'block';
+                    livePreviewLogoOverlay.src = currentLogoObj.src;
+                    livePreviewLogoOverlay.style.width = `${modalInputLogoSize.value}%`;
+                    livePreviewLogoOverlay.style.opacity = modalInputLogoOpacity.value / 100;
+                    livePreviewLogoOverlay.style.left = `${modalInputLogoX.value}%`;
+                    livePreviewLogoOverlay.style.top = `${modalInputLogoY.value}%`;
+
+                    modalValLogoSize.textContent = `${modalInputLogoSize.value}%`;
+                    modalValLogoOpacity.textContent = `${modalInputLogoOpacity.value}%`;
+                    modalValLogoX.textContent = `${modalInputLogoX.value}%`;
+                    modalValLogoY.textContent = `${modalInputLogoY.value}%`;
+                } else {
+                    livePreviewLogoOverlay.style.display = 'none';
+                }
+            };
+
+            // Lógica de Upload do Logo
+            modalInputLogo.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const url = URL.createObjectURL(file);
+                    const img = new Image();
+                    img.onload = () => {
+                        currentLogoObj = img;
+                        aplicarFiltrosModal();
+                    };
+                    img.src = url;
+                } else {
+                    currentLogoObj = null;
+                    aplicarFiltrosModal();
+                }
+            });
+
+            // Eventos das Novas Propriedades do Modal
+            btnRotateLeft.addEventListener('click', () => { modalRotation = (modalRotation - 90) % 360; aplicarFiltrosModal(); });
+            btnRotateRight.addEventListener('click', () => { modalRotation = (modalRotation + 90) % 360; aplicarFiltrosModal(); });
+            btnFlipH.addEventListener('click', () => { modalFlipH *= -1; aplicarFiltrosModal(); });
+            btnFlipV.addEventListener('click', () => { modalFlipV *= -1; aplicarFiltrosModal(); });
+            
+            modalInputCropTop.addEventListener('input', aplicarFiltrosModal);
+            modalInputCropBottom.addEventListener('input', aplicarFiltrosModal);
+            modalInputCropLeft.addEventListener('input', aplicarFiltrosModal);
+            modalInputCropRight.addEventListener('input', aplicarFiltrosModal);
+
+            modalInputBorderWidth.addEventListener('input', aplicarFiltrosModal);
+            modalInputBorderColor.addEventListener('input', aplicarFiltrosModal);
+
+            modalInputBlur.addEventListener('input', aplicarFiltrosModal);
+            modalInputSepia.addEventListener('input', aplicarFiltrosModal);
+            modalInputHue.addEventListener('input', aplicarFiltrosModal);
+            modalInputInvert.addEventListener('input', aplicarFiltrosModal);
+            modalInputVignette.addEventListener('input', aplicarFiltrosModal);
+
+            modalInputText.addEventListener('input', aplicarFiltrosModal);
+            modalInputTextFont.addEventListener('change', aplicarFiltrosModal);
+            modalInputTextColor.addEventListener('input', aplicarFiltrosModal);
+            modalInputTextSize.addEventListener('input', aplicarFiltrosModal);
+            modalInputTextOpacity.addEventListener('input', aplicarFiltrosModal);
+            modalInputTextX.addEventListener('input', aplicarFiltrosModal);
+            modalInputTextY.addEventListener('input', aplicarFiltrosModal);
+
+            modalInputLogoSize.addEventListener('input', aplicarFiltrosModal);
+            modalInputLogoOpacity.addEventListener('input', aplicarFiltrosModal);
+            modalInputLogoX.addEventListener('input', aplicarFiltrosModal);
+            modalInputLogoY.addEventListener('input', aplicarFiltrosModal);
+
+            // Atualiza os textos do painel principal e aplica nas miniaturas
+            const atualizarPainelPrincipal = () => {
+                valBrightness.textContent = `${inputBrightness.value}%`;
+                valContrast.textContent = `${inputContrast.value}%`;
+                valSaturation.textContent = `${inputSaturation.value}%`;
+                aplicarFiltrosVisuais();
+            };
+
+            // Eventos do Painel Principal
+            inputBrightness.addEventListener('input', atualizarPainelPrincipal);
+            inputContrast.addEventListener('input', atualizarPainelPrincipal);
+            inputSaturation.addEventListener('input', atualizarPainelPrincipal);
+            inputGrayscale.addEventListener('change', atualizarPainelPrincipal);
+
+            // Eventos da Modal
+            modalInputBrightness.addEventListener('input', aplicarFiltrosModal);
+            modalInputContrast.addEventListener('input', aplicarFiltrosModal);
+            modalInputSaturation.addEventListener('input', aplicarFiltrosModal);
+            modalInputGrayscale.addEventListener('change', aplicarFiltrosModal);
+
+            // Resetar Filtros do Painel Principal
+            btnResetFilters.addEventListener('click', () => {
+                inputBrightness.value = 100;
+                inputContrast.value = 100;
+                inputSaturation.value = 100;
+                inputGrayscale.checked = false;
+                atualizarPainelPrincipal();
+            });
+
+            // Resetar Filtros da Modal
+            modalBtnReset.addEventListener('click', () => {
+                modalInputBrightness.value = 100;
+                modalInputContrast.value = 100;
+                modalInputSaturation.value = 100;
+                modalInputGrayscale.checked = false;
+                
+                modalInputBlur.value = 0;
+                modalInputSepia.value = 0;
+                modalInputHue.value = 0;
+                modalInputInvert.value = 0;
+                modalInputVignette.value = 0;
+                
+                modalInputBorderWidth.value = 0;
+                modalInputBorderColor.value = '#ffffff';
+
+                modalInputCropTop.value = 0;
+                modalInputCropBottom.value = 0;
+                modalInputCropLeft.value = 0;
+                modalInputCropRight.value = 0;
+
+                modalRotation = 0;
+                modalFlipH = 1;
+                modalFlipV = 1;
+                
+                modalInputText.value = '';
+                modalInputTextFont.value = 'Arial, sans-serif';
+                modalInputTextColor.value = '#ffffff';
+                modalInputTextSize.value = 40;
+                modalInputTextOpacity.value = 100;
+                modalInputTextX.value = 50;
+                modalInputTextY.value = 90;
+
+                modalInputLogo.value = '';
+                currentLogoObj = null;
+                modalInputLogoSize.value = 20;
+                modalInputLogoOpacity.value = 100;
+                modalInputLogoX.value = 50;
+                modalInputLogoY.value = 50;
+
+                aplicarFiltrosModal();
+            });
+
+            // Controles de Abertura/Fechamento da Modal
+            let currentModalFile = null;
+
+            const abrirModalPreview = (file, url) => {
+                currentModalFile = file;
+                livePreviewImg.src = url;
+                
+                // Limpa transformações geométricas da sessão anterior (para abrir sempre "normal")
+                modalRotation = 0;
+                modalFlipH = 1;
+                modalFlipV = 1;
+                modalInputBlur.value = 0;
+                modalInputSepia.value = 0;
+                modalInputHue.value = 0;
+                modalInputInvert.value = 0;
+                modalInputVignette.value = 0;
+
+                modalInputBorderWidth.value = 0;
+                modalInputBorderColor.value = '#ffffff';
+                
+                modalInputCropTop.value = 0;
+                modalInputCropBottom.value = 0;
+                modalInputCropLeft.value = 0;
+                modalInputCropRight.value = 0;
+                
+                modalInputText.value = '';
+                modalInputTextFont.value = 'Arial, sans-serif';
+                modalInputTextColor.value = '#ffffff';
+                modalInputTextSize.value = 40;
+                modalInputTextOpacity.value = 100;
+                modalInputTextX.value = 50;
+                modalInputTextY.value = 90;
+
+                modalInputLogo.value = '';
+                currentLogoObj = null;
+                modalInputLogoSize.value = 20;
+                modalInputLogoOpacity.value = 100;
+                modalInputLogoX.value = 50;
+                modalInputLogoY.value = 50;
+
+                // Ao abrir a modal, ela herda como base as configurações globais de LUZ/COR do lote
+                modalInputBrightness.value = inputBrightness.value;
+                modalInputContrast.value = inputContrast.value;
+                modalInputSaturation.value = inputSaturation.value;
+                modalInputGrayscale.checked = inputGrayscale.checked;
+                aplicarFiltrosModal();
+
+                livePreviewModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            };
+            
+            const fecharModalPreview = () => {
+                livePreviewModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            };
+
+            btnClosePreview.addEventListener('click', fecharModalPreview);
+            modalBtnApply.addEventListener('click', fecharModalPreview);
+            livePreviewModal.addEventListener('click', (e) => {
+                if (e.target === livePreviewModal) fecharModalPreview();
+            });
+
+            // Lógica de Conversão Única pela Modal (Com ejeção de fila)
+            modalBtnConvert.addEventListener('click', async () => {
+                if (!currentModalFile) return;
+
+                const originalText = modalBtnConvert.innerHTML;
+                modalBtnConvert.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+                modalBtnConvert.disabled = true;
+
+                try {
+                    const targetFormat = selectFormat.value;
+                    const extension = targetFormat.split('/')[1];
+                    const quality = parseInt(inputQuality.value) / 100;
+
+                    // Converte avisando a matriz para usar as definições exclusivas da Modal
+                    const blob = await converterImagem(currentModalFile, targetFormat, quality, true);
+                    
+                    const oldSize = currentModalFile.size;
+                    const newSize = blob.size;
+                    const seqNumber = String(globalImageCounter).padStart(2, '0');
+                    const finalFileName = `Cronicas_Estelares_${seqNumber}.${extension}`;
+                    const currentBlobUrl = URL.createObjectURL(blob);
+
+                    adicionarNaGaleria(currentBlobUrl, finalFileName, oldSize, newSize, blob, seqNumber);
+                    globalImageCounter++;
+
+                    fecharModalPreview();
+                    visualizarNaMatriz(currentBlobUrl); // Joga pro visor principal e exibe o resultado
+                    
+                    // Retira a imagem recém convertida da fila (lote pendente)
+                    currentFiles = currentFiles.filter(f => f !== currentModalFile);
+                    
+                    if (currentFiles.length > 0) {
+                        atualizarPainelArquivos(); // Reestrutura as miniaturas removendo a imagem pronta
+                    } else {
+                        btnRemoveFile.click(); // Fila zerada, limpa a área de upload
+                    }
+                    
+                } catch (error) {
+                    console.error("Erro na conversão individual:", error);
+                    alert("Atenção, Comandante: Ocorreu uma anomalia ao converter a imagem.");
+                } finally {
+                    modalBtnConvert.innerHTML = originalText;
+                    modalBtnConvert.disabled = false;
+                }
+            });
+
+            // --- FUNÇÃO AUXILIAR DE CONVERSÃO (ASYNC) ---
+            const converterImagem = (file, targetFormat, quality, useModalFilters = false) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            // Se estiver usando Modal Filters e houver rotação de 90 ou 270, inverte largura e altura do canvas
+                            const isVertical = useModalFilters && (Math.abs(modalRotation) === 90 || Math.abs(modalRotation) === 270);
+                            
+                            // Coordenadas de Recorte
+                            const cTopPct = useModalFilters ? parseInt(modalInputCropTop.value) / 100 : 0;
+                            const cBottomPct = useModalFilters ? parseInt(modalInputCropBottom.value) / 100 : 0;
+                            const cLeftPct = useModalFilters ? parseInt(modalInputCropLeft.value) / 100 : 0;
+                            const cRightPct = useModalFilters ? parseInt(modalInputCropRight.value) / 100 : 0;
+
+                            const sourceX = img.width * cLeftPct;
+                            const sourceY = img.height * cTopPct;
+                            const sourceW = Math.max(1, img.width * (1 - cLeftPct - cRightPct)); // Impede width 0
+                            const sourceH = Math.max(1, img.height * (1 - cTopPct - cBottomPct)); // Impede height 0
+                            
+                            // Adiciona o tamanho da borda ao canvas para não sobrepor a imagem, ou mantém se a borda for interna
+                            // Usaremos borda interna (inset) para respeitar o tamanho exato de corte da imagem original
+                            processingCanvas.width = isVertical ? sourceH : sourceW;
+                            processingCanvas.height = isVertical ? sourceW : sourceH;
+                            
+                            const ctx = processingCanvas.getContext('2d');
+
+                            // Resgata os valores do painel correspondente (Principal ou Modal Isolada)
+                            const b = useModalFilters ? modalInputBrightness.value : inputBrightness.value;
+                            const c = useModalFilters ? modalInputContrast.value : inputContrast.value;
+                            const s = useModalFilters ? modalInputSaturation.value : inputSaturation.value;
+                            const g = useModalFilters ? (modalInputGrayscale.checked ? 100 : 0) : (inputGrayscale.checked ? 100 : 0);
+                            
+                            const blur = useModalFilters ? modalInputBlur.value : 0;
+                            const sepia = useModalFilters ? modalInputSepia.value : 0;
+                            const hue = useModalFilters ? modalInputHue.value : 0;
+                            const invert = useModalFilters ? modalInputInvert.value : 0;
+                            const vignette = useModalFilters ? parseInt(modalInputVignette.value) : 0;
+                            
+                            const borderWidth = useModalFilters ? parseInt(modalInputBorderWidth.value) : 0;
+                            const borderColor = useModalFilters ? modalInputBorderColor.value : '#ffffff';
+
+                            ctx.filter = `brightness(${b}%) contrast(${c}%) saturate(${s}%) grayscale(${g}%) blur(${blur}px) sepia(${sepia}%) hue-rotate(${hue}deg) invert(${invert}%)`;
+
+                            if (targetFormat === 'image/jpeg') {
+                                ctx.fillStyle = '#FFFFFF';
+                                ctx.fillRect(0, 0, processingCanvas.width, processingCanvas.height);
+                            }
+
+                            ctx.save();
+                            if (useModalFilters) {
+                                // Translada para o centro, rotaciona, espelha, e desenha deslocado apenas o recorte
+                                ctx.translate(processingCanvas.width / 2, processingCanvas.height / 2);
+                                ctx.rotate(modalRotation * Math.PI / 180);
+                                ctx.scale(modalFlipH, modalFlipV);
+                                ctx.drawImage(img, sourceX, sourceY, sourceW, sourceH, -sourceW / 2, -sourceH / 2, sourceW, sourceH);
+                            } else {
+                                ctx.drawImage(img, 0, 0);
+                            }
+                            ctx.restore();
+                            
+                            ctx.filter = 'none'; // Reseta o filtro para operações de sobreposição
+
+                            if (useModalFilters) {
+                                // 1. Renderiza a Vinheta (Degradê Radial do centro para as pontas)
+                                if (vignette > 0) {
+                                    const radiusX = processingCanvas.width / 2;
+                                    const radiusY = processingCanvas.height / 2;
+                                    const maxRadius = Math.max(radiusX, radiusY) * 1.5;
+                                    
+                                    const gradient = ctx.createRadialGradient(radiusX, radiusY, maxRadius * 0.4, radiusX, radiusY, maxRadius);
+                                    gradient.addColorStop(0, 'rgba(0,0,0,0)');
+                                    gradient.addColorStop(1, `rgba(0,0,0,${vignette / 100})`);
+                                    
+                                    ctx.fillStyle = gradient;
+                                    ctx.fillRect(0, 0, processingCanvas.width, processingCanvas.height);
+                                }
+
+                                // 2. Renderiza a Moldura (Borda interna)
+                                if (borderWidth > 0) {
+                                    ctx.lineWidth = borderWidth;
+                                    ctx.strokeStyle = borderColor;
+                                    ctx.strokeRect(borderWidth / 2, borderWidth / 2, processingCanvas.width - borderWidth, processingCanvas.height - borderWidth);
+                                }
+
+                                // 3. Renderiza a Marca d'Água (Logo)
+                                if (currentLogoObj) {
+                                    const lSizePct = parseInt(modalInputLogoSize.value) / 100;
+                                    const lOpacity = parseInt(modalInputLogoOpacity.value) / 100;
+                                    const lX = parseInt(modalInputLogoX.value) / 100;
+                                    const lY = parseInt(modalInputLogoY.value) / 100;
+
+                                    const logoDrawWidth = processingCanvas.width * lSizePct;
+                                    const logoDrawHeight = logoDrawWidth * (currentLogoObj.height / currentLogoObj.width);
+                                    
+                                    const logoDrawX = (processingCanvas.width * lX) - (logoDrawWidth / 2);
+                                    const logoDrawY = (processingCanvas.height * lY) - (logoDrawHeight / 2);
+
+                                    ctx.globalAlpha = lOpacity;
+                                    ctx.drawImage(currentLogoObj, logoDrawX, logoDrawY, logoDrawWidth, logoDrawHeight);
+                                    ctx.globalAlpha = 1.0;
+                                }
+
+                                // 4. Renderização do Texto na Exportação
+                                if (modalInputText.value.trim() !== '') {
+                                    const txt = modalInputText.value;
+                                    const tFont = modalInputTextFont.value;
+                                    const tColor = modalInputTextColor.value;
+                                    const tSize = parseInt(modalInputTextSize.value);
+                                    const tOpacity = parseInt(modalInputTextOpacity.value) / 100;
+                                    const tX = parseInt(modalInputTextX.value) / 100;
+                                    const tY = parseInt(modalInputTextY.value) / 100;
+
+                                    ctx.font = `bold ${tSize}px ${tFont}`;
+                                    ctx.fillStyle = tColor;
+                                    ctx.textAlign = "center";
+                                    ctx.textBaseline = "middle";
+                                    ctx.globalAlpha = tOpacity; // Aplica a transparência no Canvas
+
+                                    const xPos = processingCanvas.width * tX;
+                                    const yPos = processingCanvas.height * tY;
+
+                                    // Adiciona uma pequena sombra para legibilidade em fundos mistos
+                                    ctx.shadowColor = "rgba(0,0,0,0.6)";
+                                    ctx.shadowBlur = 6;
+                                    ctx.shadowOffsetX = 2;
+                                    ctx.shadowOffsetY = 2;
+
+                                    ctx.fillText(txt, xPos, yPos);
+                                    
+                                    ctx.shadowColor = "transparent"; // Reseta sombra
+                                    ctx.globalAlpha = 1.0; // Reseta transparência para não bugar outras partes
+                                }
+                            }
+
+                            ctx.filter = 'none'; // Reseta o filtro para não bugar o canvas nas próximas execuções
+
+                            processingCanvas.toBlob((blob) => {
+                                if (blob) resolve(blob);
+                                else reject(new Error('Erro no Blob'));
+                            }, targetFormat, quality);
+                        };
+                        img.onerror = () => reject(new Error('Erro ao carregar a imagem na matriz'));
+                        img.src = event.target.result;
+                    };
+                    reader.onerror = () => reject(new Error('Erro de leitura de arquivo'));
+                    reader.readAsDataURL(file);
+                });
+            };
+
+            // --- LÓGICA DE CONVERSÃO EM MASSA ---
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (currentFiles.length === 0) return;
+
+                // Estado de carregamento
+                submitBtn.disabled = true;
+                btnText.textContent = "Iniciando Sequência...";
+                btnSpinner.classList.remove('hidden');
+
+                const targetFormat = selectFormat.value;
+                const extension = targetFormat.split('/')[1];
+                const quality = parseInt(inputQuality.value) / 100;
+
+                let totalOldSize = 0;
+                let totalNewSize = 0;
+                let isBatch = currentFiles.length > 1;
+
+                try {
+                    for (let i = 0; i < currentFiles.length; i++) {
+                        const file = currentFiles[i];
+                        
+                        if (isBatch) {
+                            btnText.textContent = `Convertendo ${i + 1} de ${currentFiles.length}...`;
+                        } else {
+                            btnText.textContent = "Processando Matriz...";
+                        }
+
+                        const blob = await converterImagem(file, targetFormat, quality);
+                        
+                        const oldSize = file.size;
+                        const newSize = blob.size;
+                        totalOldSize += oldSize;
+                        totalNewSize += newSize;
+
+                        const seqNumber = String(globalImageCounter).padStart(2, '0');
+                        const finalFileName = `Cronicas_Estelares_${seqNumber}.${extension}`;
+                        const currentBlobUrl = URL.createObjectURL(blob);
+
+                        // Adiciona na galeria, salvando também o BLOB para facilitar o ZIP da galeria
+                        adicionarNaGaleria(currentBlobUrl, finalFileName, oldSize, newSize, blob, seqNumber);
+                        
+                        globalImageCounter++;
+
+                        // Mostra a imagem atual no visor
+                        previewContainer.classList.remove('hidden');
+                        previewImg.src = currentBlobUrl;
+
+                        // Configura o botão de download do visor SEMPRE para a imagem visível atual
+                        btnDownload.innerHTML = '<i class="fas fa-download"></i> Baixar Imagem Otimizada';
+                        btnDownload.onclick = (e) => {
+                            e.preventDefault();
+                            const a = document.createElement('a');
+                            a.href = currentBlobUrl;
+                            a.download = finalFileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                        };
+                    }
+
+                    // Atualizar Estatísticas Finais (Seja único ou Total do Lote)
+                    statOriginal.textContent = formatBytes(totalOldSize);
+                    statNovo.textContent = formatBytes(totalNewSize);
+
+                    if (totalNewSize < totalOldSize) {
+                        const economia = ((totalOldSize - totalNewSize) / totalOldSize * 100).toFixed(1);
+                        statEconomia.textContent = `-${economia}%`;
+                        statEconomia.className = "font-bold text-[var(--color-primary)]";
+                    } else if (totalNewSize > totalOldSize) {
+                        const aumento = ((totalNewSize - totalOldSize) / totalOldSize * 100).toFixed(1);
+                        statEconomia.textContent = `+${aumento}% (Maior)`;
+                        statEconomia.className = "font-bold text-[var(--color-secondary)]";
+                    } else {
+                        statEconomia.textContent = "Igual";
+                        statEconomia.className = "font-bold text-[var(--color-text)]";
+                    }
+
+                    resultadoContainer.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error("Erro no processamento:", error);
+                    alert("Atenção, Comandante: Ocorreu uma anomalia espacial. Algumas imagens não puderam ser convertidas.");
+                } finally {
+                    resetBotao();
+                }
+            });
+
+            // --- LÓGICA DO BOTÃO BAIXAR LOTE (GALERIA INTEIRA) ---
+            btnDownloadLote.addEventListener('click', async (e) => {
+                e.preventDefault();
+                if (conversoesRecentes.length === 0) return;
+
+                const originalText = btnDownloadLote.innerHTML;
+                btnDownloadLote.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Empacotando...';
+                btnDownloadLote.disabled = true;
+
+                try {
+                    const zip = new window.JSZip();
+                    const nameCount = {};
+
+                    // Varre toda a galeria e adiciona ao ZIP
+                    conversoesRecentes.forEach(item => {
+                        let finalName = item.nome;
+                        // Evita sobrescrever imagens com o mesmo nome no ZIP
+                        if (nameCount[finalName]) {
+                            nameCount[finalName]++;
+                            const nameParts = finalName.split('.');
+                            const ext = nameParts.pop();
+                            finalName = `${nameParts.join('.')}_(${nameCount[finalName]}).${ext}`;
+                        } else {
+                            nameCount[finalName] = 1;
+                        }
+                        zip.file(finalName, item.blob);
+                    });
+
+                    const zipContent = await zip.generateAsync({ type: 'blob' });
+                    const zipUrl = URL.createObjectURL(zipContent);
+
+                    const a = document.createElement('a');
+                    a.href = zipUrl;
+                    a.download = `Galeria_CronicasEstelares_${Date.now()}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    
+                    setTimeout(() => URL.revokeObjectURL(zipUrl), 2000); // Libera o ZIP da RAM após baixar
+                } catch (error) {
+                    console.error("Erro ao gerar ZIP da Galeria:", error);
+                    alert("Ocorreu uma falha ao empacotar os arquivos da galeria.");
+                } finally {
+                    btnDownloadLote.innerHTML = originalText;
+                    btnDownloadLote.disabled = false;
+                }
+            });
+
+            // --- LÓGICA DA GALERIA DE RECENTES ---
+            function adicionarNaGaleria(url, nome, tamanhoAntigo, tamanhoNovo, blob, numero) {
+                // Adiciona no início da matriz
+                conversoesRecentes.unshift({
+                    url: url,
+                    nome: nome,
+                    tamanhoAntigo: tamanhoAntigo,
+                    tamanhoNovo: tamanhoNovo,
+                    blob: blob,
+                    numero: numero
+                });
+
+                // Mantém até 32 itens na frota (adequado para PCs com 8GB+ RAM)
+                if (conversoesRecentes.length > 32) {
+                    const removido = conversoesRecentes.pop();
+                    // Limpa a memória apenas das URLs antigas descartadas
+                    URL.revokeObjectURL(removido.url);
+                }
+
+                renderizarGaleria();
+            }
+
+            function renderizarGaleria() {
+                if (conversoesRecentes.length === 0) {
+                    galeriaContainer.classList.add('hidden');
+                    btnDownloadLote.classList.add('hidden');
+                    btnLimparGaleria.classList.add('hidden');
+                    galeriaFooter.classList.add('hidden');
+                    return;
+                }
+                
+                galeriaContainer.classList.remove('hidden');
+                btnLimparGaleria.classList.remove('hidden');
+                galeriaFooter.classList.remove('hidden');
+                
+                // Exibe o botão de Lote se houver 2 ou mais imagens
+                if (conversoesRecentes.length > 1) {
+                    btnDownloadLote.classList.remove('hidden');
+                } else {
+                    btnDownloadLote.classList.add('hidden');
+                }
+
+                galeriaGrid.innerHTML = '';
+                let totalSizeGallery = 0;
+
+                conversoesRecentes.forEach((item) => {
+                    totalSizeGallery += item.tamanhoNovo; // Soma o peso total da galeria
+                    
+                    let economiaHtml = '';
+                    if (item.tamanhoNovo < item.tamanhoAntigo) {
+                        const economia = ((item.tamanhoAntigo - item.tamanhoNovo) / item.tamanhoAntigo * 100).toFixed(0);
+                        economiaHtml = `<span class="text-[var(--color-primary)] font-bold text-xs">-${economia}%</span>`;
+                    } else {
+                        economiaHtml = `<span class="text-[var(--color-secondary)] font-bold text-xs">+ Vol.</span>`;
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = 'recent-card';
+                    div.innerHTML = `
+                        <div class="recent-img-container" onclick="window.visualizarNaMatriz('${item.url}')" title="Inspecionar no visor principal">
+                            <span class="absolute top-1.5 left-1.5 bg-black/70 text-white text-[0.65rem] font-bold px-1.5 py-0.5 rounded border border-[var(--color-primary)] z-10 backdrop-blur-sm shadow-md">#${item.numero}</span>
+                            <img src="${item.url}" alt="${item.nome}">
+                            <i class="fas fa-search-plus hover-icon"></i>
+                        </div>
+                        <div class="p-2 flex flex-col gap-1 text-center">
+                            <span class="text-[0.65rem] truncate w-full text-[var(--color-text)] opacity-80" title="${item.nome}">${item.nome}</span>
+                            <div class="flex justify-between items-center px-1">
+                                <span class="text-[0.65rem] opacity-60">${formatBytes(item.tamanhoNovo, 0)}</span>
+                                ${economiaHtml}
+                            </div>
+                            <div class="mt-1 flex gap-1 w-full">
+                                <a href="${item.url}" download="${item.nome}" class="bg-[rgba(0,0,0,0.2)] hover:bg-[var(--color-primary)] hover:text-black transition-colors text-[0.7rem] py-1 rounded flex-grow flex justify-center items-center gap-1 font-semibold text-[var(--color-text)]">
+                                    <i class="fas fa-download"></i> Baixar
+                                </a>
+                                <button type="button" onclick="window.excluirDaGaleria('${item.url}')" class="btn-excluir-item text-[0.7rem] py-1 px-2 rounded flex justify-center items-center" title="Excluir matriz">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    galeriaGrid.appendChild(div);
+                });
+                
+                // Atualiza o visor de armazenamento total da galeria
+                galeriaTotalSize.textContent = formatBytes(totalSizeGallery);
+            }
+
+            // --- LÓGICA DE LIMPEZA DA GALERIA ---
+            btnLimparGaleria.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Destrói todas as URLs simultaneamente para liberar memória
+                conversoesRecentes.forEach(item => URL.revokeObjectURL(item.url));
+                conversoesRecentes = [];
+                globalImageCounter = 1; // Reinicia o contador da frota
+                renderizarGaleria();
+                
+                // Se o visor principal estivesse aberto com alguma imagem da galeria apagada, ele se oculta
+                if (previewImg.src && previewImg.src.startsWith('blob:')) {
+                    resultadoContainer.classList.add('hidden');
+                }
+            });
+
+            // --- LÓGICA DE EXCLUSÃO INDIVIDUAL ---
+            window.excluirDaGaleria = (url) => {
+                // Remove o item da matriz de dados
+                conversoesRecentes = conversoesRecentes.filter(item => item.url !== url);
+                // Libera a RAM imediatamente destruindo a URL temporária
+                URL.revokeObjectURL(url);
+                // Atualiza o painel visual
+                renderizarGaleria();
+                
+                // Se a imagem excluída estiver no preview, esconde o preview
+                if (previewImg.src === url) {
+                    resultadoContainer.classList.add('hidden');
+                }
+            };
+
+            // --- LÓGICA DE VISUALIZAÇÃO NO VISOR PRINCIPAL ---
+            window.visualizarNaMatriz = (url) => {
+                const item = conversoesRecentes.find(i => i.url === url);
+                if (!item) return;
+
+                // Restaura a visibilidade do visor principal
+                resultadoContainer.classList.remove('hidden');
+                previewContainer.classList.remove('hidden');
+                previewImg.src = item.url;
+
+                // Atualiza estatísticas exatas da imagem selecionada
+                statOriginal.textContent = formatBytes(item.tamanhoAntigo);
+                statNovo.textContent = formatBytes(item.tamanhoNovo);
+
+                if (item.tamanhoNovo < item.tamanhoAntigo) {
+                    const economia = ((item.tamanhoAntigo - item.tamanhoNovo) / item.tamanhoAntigo * 100).toFixed(1);
+                    statEconomia.textContent = `-${economia}%`;
+                    statEconomia.className = "font-bold text-[var(--color-primary)]";
+                } else if (item.tamanhoNovo > item.tamanhoAntigo) {
+                    const aumento = ((item.tamanhoNovo - item.tamanhoAntigo) / item.tamanhoAntigo * 100).toFixed(1);
+                    statEconomia.textContent = `+${aumento}% (Maior)`;
+                    statEconomia.className = "font-bold text-[var(--color-secondary)]";
+                } else {
+                    statEconomia.textContent = "Igual";
+                    statEconomia.className = "font-bold text-[var(--color-text)]";
+                }
+
+                // Ajusta o botão central de download para este item específico
+                btnDownload.innerHTML = '<i class="fas fa-download"></i> Baixar Imagem Otimizada';
+                btnDownload.onclick = (e) => {
+                    e.preventDefault();
+                    const a = document.createElement('a');
+                    a.href = item.url;
+                    a.download = item.nome;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                };
+
+                // Desliza a tela suavemente para cima (foco no visor)
+                resultadoContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
+
+            // --- FUNÇÃO PARA RESETAR ---
+            window.resetApp = () => {
+                btnRemoveFile.click(); // Aproveita a lógica de limpar o arquivo já existente
+            };
+        });
+    </script>
+</body>
+</html>
