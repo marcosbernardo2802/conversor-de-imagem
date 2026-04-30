@@ -1652,7 +1652,7 @@
                     
                     const oldSize = currentModalFile.size;
                     const newSize = blob.size;
-                    const seqNumber = String(globalImageCounter).padStart(2, '0');
+                    const seqNumber = String(globalImageCounter).padStart(4, '0');
                     const finalFileName = `Cronicas_Estelares_${seqNumber}.${extension}`;
                     const currentBlobUrl = URL.createObjectURL(blob);
 
@@ -1866,7 +1866,7 @@
                         totalOldSize += oldSize;
                         totalNewSize += newSize;
 
-                        const seqNumber = String(globalImageCounter).padStart(2, '0');
+                        const seqNumber = String(globalImageCounter).padStart(4, '0');
                         const finalFileName = `Cronicas_Estelares_${seqNumber}.${extension}`;
                         const currentBlobUrl = URL.createObjectURL(blob);
 
@@ -1979,8 +1979,8 @@
                     numero: numero
                 });
 
-                // Mantém até 32 itens na frota (adequado para PCs com 8GB+ RAM)
-                if (conversoesRecentes.length > 32) {
+                // Expansão do porão de carga: Mantém até 500 itens na frota simultaneamente
+                if (conversoesRecentes.length > 500) {
                     const removido = conversoesRecentes.pop();
                     // Limpa a memória apenas das URLs antigas descartadas
                     URL.revokeObjectURL(removido.url);
